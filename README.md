@@ -1,7 +1,7 @@
 Geoserver-tomcat Cookbook
 =============
 
-
+[![Build Status](https://travis-ci.org/Harvard-ATG/cookbooks-geoserver-tomcat.svg?branch=master)](https://travis-ci.org/Harvard-ATG/cookbooks-geoserver-tomcat)
 
 Installs and configures geoserver to run on tomcat application server.
 
@@ -86,9 +86,10 @@ chef gem install kitchen-docker
 
 Port forwarding.
 The 3 boxes created by test kitchen have the bellow port 80 forwarding.
-Ubuntu 14.04, 8081
-CentOS 7, 8082
-CentOS 6, 8080
+
+* Ubuntu 14.04, 8081
+* CentOS 7, 8082
+* CentOS 6, 8080
 
 License and Author
 ==================
