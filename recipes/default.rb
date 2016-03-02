@@ -21,11 +21,11 @@ include_recipe 'tomcat'
 include_recipe 'application'
 include_recipe 'postgis'
 
-apt_package 'unzip' do
+package 'unzip' do
   action :install
 end
 
-tomcatService = "tomcat#{node['tomcat']['base_version']}"
+#tomcatService = "tomcat#{node['tomcat']['base_version']}"
 
 remote_file node.geoserver.download do
   source   node.geoserver.link
