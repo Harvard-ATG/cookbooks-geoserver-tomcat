@@ -17,15 +17,12 @@
 # limitations under the License.
 #
 
-include_recipe 'tomcat'
+include_recipe 'java'
 include_recipe 'application'
 include_recipe 'postgis'
 
 package 'unzip'
 
-tomcat_install
-
-tomcat_service
 
 remote_file node['geoserver']['download'] do
   source   node['geoserver']['link']
@@ -64,8 +61,6 @@ end
 
 application node['geoserver']['context'] do
   path node['geoserver']['home']
-  owner node['tomcat']['user']
-  group node['tomcat']['group']
   repository node['geoserver']['war']
   revision     'HEAD'
   scm_provider Chef::Provider::File::Deploy
@@ -78,21 +73,10 @@ end
 
 remote_directory node['geoserver']['data'] do
   source       'data_dir'
-  owner        node['tomcat']['user']
-  group        node['tomcat']['group']
-  files_owner  node['tomcat']['user']
-  files_group  node['tomcat']['group']
   files_backup 0
   files_mode   '644'
   purge        true
   action       :create_if_missing
   recursive true
-  notifies :run, "execute[change-permission-#{node['geoserver']['data']}]", :immediately
   not_if { File.exist? node['geoserver']['data'] }
-end
-
-execute "change-permission-#{node['geoserver']['data']}" do
-  command "chown -R #{node['tomcat']['user']}:#{node['tomcat']['group']} #{node['geoserver']['data']}"
-  user 'root'
-  action :nothing
 end
