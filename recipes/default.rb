@@ -25,18 +25,18 @@ package 'unzip'
 
 #tomcatService = "tomcat#{node['tomcat']['base_version']}"
 
-remote_file node.geoserver.download do
-  source   node.geoserver.link
+remote_file node['geoserver']['download'] do
+  source   node['geoserver']['link']
   mode     0644
   action :create_if_missing
 end
 
 bash 'unpack geoserver' do
   code <<-EOH
-  mkdir "#{node.geoserver.extracted}"
-  unzip  #{node.geoserver.download} -d #{node.geoserver.extracted}
+  mkdir "#{node['geoserver']['extracted']}"
+  unzip  #{node['geoserver']['download']} -d #{node['geoserver']['extracted']}
   EOH
-  not_if "test -d #{node.geoserver.extracted}"
+  not_if "test -d #{node['geoserver']['extracted']}"
 end
 
 bash 'Creating temporary working directory' do
@@ -50,21 +50,21 @@ remote_directory 'Extract amdb jar' do
   source 'geoserver-lib'
 end
 
-bash "Adding amdb jar to  geoserver  war file #{node.geoserver.war}" do
+bash "Adding amdb jar to  geoserver  war file #{node['geoserver']['war']}" do
   code <<-EOH
   cd /tmp/geoserver-temp
-  jar -uvf #{node.geoserver.war} WEB-INF/lib
-  chmod +r #{node.geoserver.war}
+  jar -uvf #{node['geoserver']['war']} WEB-INF/lib
+  chmod +r #{node['geoserver']['war']}
   cd -
   rm -rf /tmp/geoserver-temp
   EOH
 end
 
-application node.geoserver.context do
-  path node.geoserver.home
+application node['geoserver']['context'] do
+  path node['geoserver']['home']
   owner node['tomcat']['user']
   group node['tomcat']['group']
-  repository node.geoserver.war
+  repository node['geoserver']['war']
   revision     'HEAD'
   scm_provider Chef::Provider::File::Deploy
 
@@ -74,23 +74,23 @@ application node.geoserver.context do
   tomcat
 end
 
-remote_directory node.geoserver.data do
+remote_directory node['geoserver']['data'] do
   source       'data_dir'
-  owner        node.tomcat.user
-  group        node.tomcat.group
-  files_owner  node.tomcat.user
-  files_group  node.tomcat.group
+  owner        node['tomcat']['user']
+  group        node['tomcat']['group']
+  files_owner  node['tomcat']['user']
+  files_group  node['tomcat']['group']
   files_backup 0
   files_mode   '644'
   purge        true
   action       :create_if_missing
   recursive true
-  notifies :run, "execute[change-permission-#{node.geoserver.data}]", :immediately
-  not_if { File.exist? node.geoserver.data }
+  notifies :run, "execute[change-permission-#{node['geoserver']['data']}]", :immediately
+  not_if { File.exist? node['geoserver']['data'] }
 end
 
-execute "change-permission-#{node.geoserver.data}" do
-  command "chown -R #{node.tomcat.user}:#{node.tomcat.group} #{node.geoserver.data}"
+execute "change-permission-#{node['geoserver']['data']}" do
+  command "chown -R #{node['tomcat']['user']}:#{node['tomcat']['group']} #{node['geoserver']['data']}"
   user 'root'
   action :nothing
 end

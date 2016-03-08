@@ -11,6 +11,7 @@ version          '0.1.0'
 end
 
 depends          'application_java'
+depends          'application'
 depends          'database'
 depends          'postgresql'
 depends          'postgis'
