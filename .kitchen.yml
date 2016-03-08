@@ -3,6 +3,9 @@ driver:
   name: docker
   privileged: true
   use_sudo: false
+  forward:
+    - 80
+    - 8080
 
 provisioner:
   name: chef_zero
@@ -22,9 +25,6 @@ platforms:
     provision_command:
       - /usr/bin/apt-get update
       - /usr/bin/apt-get install apt-transport-https net-tools -y
-    forward:
-      - 80:8001
-      - 8080:8081
 - name: centos-6
   driver:
     image: centos:6
@@ -32,8 +32,6 @@ platforms:
     run_command: /sbin/init
     provision_command:
       - /usr/bin/yum install -y initscripts net-tools wget
-    forward:
-      - 80:8080
 - name: centos-7
   run_list:
     - recipe[yum]
@@ -43,8 +41,6 @@ platforms:
     run_command: /usr/lib/systemd/systemd
     provision_command:
     - /bin/yum install -y initscripts net-tools wget
-    forward:
-      - 80:8082
 suites:
   - name: default
     run_list:

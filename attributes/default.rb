@@ -21,14 +21,14 @@ include_attribute 'tomcat'
 
 expand!
 
-default[:geoserver][:version] = '2.5.2'
-default[:geoserver][:workingDir] = '/usr/local/src'
+default['geoserver']['version'] = '2.5.2'
+default['geoserver']['workingDir'] = '/usr/local/src'
 
-default[:geoserver][:link]      = "http://sourceforge.net/projects/geoserver/files/GeoServer/#{geoserver.version}/geoserver-#{geoserver.version}-war.zip"
-default[:geoserver][:extracted] = "#{geoserver.workingDir}/geoserver-#{geoserver.version}"
-default[:geoserver][:war]       = "#{geoserver.extracted}/geoserver.war"
-default[:geoserver][:download]  = "#{geoserver.workingDir}/geoserver-#{geoserver.version}.zip"
+default['geoserver']['link']      = "http://sourceforge.net/projects/geoserver/files/GeoServer/#{geoserver.version}/geoserver-#{geoserver.version}-war.zip"
+default['geoserver']['extracted'] = "#{geoserver.workingDir}/geoserver-#{geoserver.version}"
+default['geoserver']['war']       = "#{geoserver.extracted}/geoserver.war"
+default['geoserver']['download']  = "#{geoserver.workingDir}/geoserver-#{geoserver.version}.zip"
 
-default[:geoserver][:home]          = "/var/local/geoserver-#{geoserver.version}"
-default[:geoserver][:data]          = "/var/local/geoserver-#{geoserver.version}/data"
-default[:geoserver][:context]       = 'geoserver'
+default['geoserver']['home']          = "/var/local/geoserver-#{geoserver.version}"
+default['geoserver']['data']          = "/var/local/geoserver-#{geoserver.version}/data"
+default['geoserver']['context']       = 'geoserver'

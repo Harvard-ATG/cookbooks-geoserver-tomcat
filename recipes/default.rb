@@ -21,9 +21,7 @@ include_recipe 'tomcat'
 include_recipe 'application'
 include_recipe 'postgis'
 
-package 'unzip' do
-  action :install
-end
+package 'unzip'
 
 #tomcatService = "tomcat#{node['tomcat']['base_version']}"
 
