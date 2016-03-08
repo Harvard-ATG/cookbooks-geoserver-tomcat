@@ -23,7 +23,9 @@ include_recipe 'postgis'
 
 package 'unzip'
 
-#tomcatService = "tomcat#{node['tomcat']['base_version']}"
+tomcat_install
+
+tomcat_service
 
 remote_file node['geoserver']['download'] do
   source   node['geoserver']['link']

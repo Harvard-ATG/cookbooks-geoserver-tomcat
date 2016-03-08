@@ -17,11 +17,9 @@
 # limitations under the License.
 #
 
-include_attribute 'tomcat'
 
-expand!
 
-default['geoserver']['version'] = '2.5.2'
+default['geoserver']['version'] = '2.8.2'
 default['geoserver']['workingDir'] = '/usr/local/src'
 
 default['geoserver']['link']      = "http://sourceforge.net/projects/geoserver/files/GeoServer/#{geoserver.version}/geoserver-#{geoserver.version}-war.zip"
