@@ -22,7 +22,7 @@
 default['geoserver']['version'] = '2.8.2'
 default['geoserver']['workingDir'] = '/usr/local/src'
 
-default['geoserver']['link']      = "http://sourceforge.net/projects/geoserver/files/GeoServer/#{geoserver.version}/geoserver-#{geoserver.version}-war.zip"
+default['geoserver']['link']      = "http://downloads.sourceforge.net/project/geoserver/GeoServer/#{geoserver.version}/geoserver-#{geoserver.version}-war.zip"
 default['geoserver']['extracted'] = "#{geoserver.workingDir}/geoserver-#{geoserver.version}"
 default['geoserver']['war']       = "#{geoserver.extracted}/geoserver.war"
 default['geoserver']['download']  = "#{geoserver.workingDir}/geoserver-#{geoserver.version}.zip"
