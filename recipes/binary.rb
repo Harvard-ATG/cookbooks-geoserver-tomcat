@@ -38,8 +38,8 @@ bash 'move geoserver' do
 end
 
 service 'geoserver' do
-  supports :status => true, :restart => true, :truereload => true
+  supports status: true, restart: true, truereload: true
   start_command "node['geoserver']['working_dir']/bin/startup.sh"
   stop_command "node['geoserver']['working_dir']/bin/stopup.sh"
-  action [ :enable, :start ]
+  action [:enable, :start]
 end

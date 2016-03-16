@@ -17,8 +17,6 @@
 # limitations under the License.
 #
 
-
-
 default['geoserver']['install_method'] = 'binary'
 default['geoserver']['version'] = '2.8.2'
 default['geoserver']['working_dir'] = '/usr/share/geoserver'

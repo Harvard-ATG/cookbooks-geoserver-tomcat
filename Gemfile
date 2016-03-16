@@ -1,8 +1,8 @@
 source 'https://rubygems.org'
 
 group :development do
-  gem "berkshelf"
-  gem "test-kitchen"
+  gem 'berkshelf'
+  gem 'test-kitchen'
   gem 'kitchen-docker'
   gem 'kitchen-ec2'
   gem 'guard'
