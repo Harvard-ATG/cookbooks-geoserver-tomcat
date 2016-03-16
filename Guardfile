@@ -29,7 +29,7 @@ guard 'foodcritic' do
   watch('metadata.rb')
 end
 
-guard 'kitchen' do
+guard 'kitchen', cli: ['-c'] do
   watch(%r{test/.+})
   watch(%r{^recipes/(.+)\.rb$})
   watch(%r{^attributes/(.+)\.rb$})

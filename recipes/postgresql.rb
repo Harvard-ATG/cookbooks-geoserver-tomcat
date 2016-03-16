@@ -44,7 +44,22 @@ end
 postgresql_database 'create postgis extension' do
   connection postgresql_connection_info
   database_name node['geoserver']['database']
-  sql "CREATE EXTENSION if not exists postgis; CREATE EXTENSION if not exists postgis_topology; CREATE EXTENSION if not exists dblink;create or replace view observation_locations as SELECT obs.id, obs.source, obs.species_name, obs.topology FROM dblink('dbname=biodiv'::text, 'select id, source, species_name, topology from observation_locations'::text) obs(id bigint, source text, species_name character varying(255), topology geometry);"
+  sql "CREATE EXTENSION if not exists postgis;
+        CREATE EXTENSION if not exists postgis_topology;
+        CREATE EXTENSION if not exists dblink;
+        create or replace view observation_locations as 
+        SELECT obs.id, obs.source, obs.species_name, obs.topology
+        FROM dblink(
+          'dbname=biodiv'::text,
+          'select id,
+          source,
+          species_name,
+          topology from observation_locations'::text) obs(id bigint,
+          source text,
+          species_name character varying(255),
+          topology geometry
+        );
+  "
   action :nothing
 end
 
