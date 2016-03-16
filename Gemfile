@@ -1,15 +1,12 @@
 source 'https://rubygems.org'
 
-gem 'berkshelf'
-
 group :development do
-  gem "berkshelf", github: "berkshelf/berkshelf"
-  gem "vagrant", github: "mitchellh/vagrant", tag: "v1.6.3"
+  gem "berkshelf"
   gem "test-kitchen"
-  gem "kitchen-vagrant"
-end
-
-group :plugins do
-  gem "vagrant-berkshelf", github: "berkshelf/vagrant-berkshelf"
-  gem "vagrant-omnibus", github: "schisamo/vagrant-omnibus"
+  gem 'kitchen-docker'
+  gem 'kitchen-ec2'
+  gem 'guard'
+  gem 'guard-foodcritic'
+  gem 'guard-kitchen', github: 'trickyearlobe/guard-kitchen', branch: 'support_guard_2'
+  gem 'guard-rubocop'
 end

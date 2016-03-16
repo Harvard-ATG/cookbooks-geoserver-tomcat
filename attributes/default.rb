@@ -19,13 +19,14 @@
 
 
 
+default['geoserver']['install_method'] = 'binary'
 default['geoserver']['version'] = '2.8.2'
-default['geoserver']['workingDir'] = '/usr/local/src'
+default['geoserver']['working_dir'] = '/usr/share/geoserver'
 
 default['geoserver']['link']      = "http://downloads.sourceforge.net/project/geoserver/GeoServer/#{geoserver.version}/geoserver-#{geoserver.version}-war.zip"
-default['geoserver']['extracted'] = "#{geoserver.workingDir}/geoserver-#{geoserver.version}"
+default['geoserver']['extracted'] = "#{geoserver.working_dir}/geoserver-#{geoserver.version}"
 default['geoserver']['war']       = "#{geoserver.extracted}/geoserver.war"
-default['geoserver']['download']  = "#{geoserver.workingDir}/geoserver-#{geoserver.version}.zip"
+default['geoserver']['download']  = "#{geoserver.working_dir}/geoserver-#{geoserver.version}.zip"
 
 default['geoserver']['home']          = "/var/local/geoserver-#{geoserver.version}"
 default['geoserver']['data']          = "/var/local/geoserver-#{geoserver.version}/data"
