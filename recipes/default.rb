@@ -20,4 +20,4 @@
 package 'unzip'
 
 include_recipe 'java'
-include_recipe "geoserver:#{node['geoserver']['install_method']}"
+include_recipe "geoserver-tomcat::#{node['geoserver']['install_method']}"

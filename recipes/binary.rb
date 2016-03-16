@@ -6,7 +6,7 @@
 #
 # this method is based on documentation found at http://docs.geoserver.org/stable/en/user/installation/linux.html
 
-geoserver_bin_zip = "#{Chef::Config['file_cache_path'] || '/tmp'}/geoserver_bin_#{version}.zip"
+geoserver_bin_zip = "#{Chef::Config['file_cache_path'] || '/tmp'}/geoserver_bin_#{node['geoserver']['version']}.zip"
 geoserver_unziped = "geoserver-#{node['geoserver']['version']}"
 
 remote_file geoserver_bin_zip do
@@ -14,14 +14,14 @@ remote_file geoserver_bin_zip do
   group 'root'
   mode '0644'
   source "http://downloads.sourceforge.net/project/geoserver/GeoServer/2.8.2/geoserver-#{node['geoserver']['version']}-bin.zip"
-  not_if ::FILE.readable?(geoserver_bin_zip)
+  not_if ::File.readable?(geoserver_bin_zip)
 end
 
 bash 'unzip geoserver' do
   user 'root'
-  cwd ::FILE.dirname(geoserver_bin_zip)
-  code "unzip -qo geoserver geoserver_bin_#{version}.zip"
-  not_if "::FILE.directory(geoserver-#{version})"
+  cwd ::File.dirname(geoserver_bin_zip)
+  code "unzip -qo geoserver geoserver_bin_#{node['geoserver']['version']}.zip"
+  not_if ::File.directory("geoserver-#{node['geoserver']['version']}:")
 end
 
 directory node['geoserver']['working_dir'] do
@@ -30,7 +30,7 @@ end
 
 bash 'move geoserver' do
   user 'root'
-  cwd ::FILE.dirname(geoserver_bin_zip)
+  cwd ::File.dirname(geoserver_bin_zip)
   code <<-EOH
       shopt -s dotglob;
       cp -r #{geoserver_unziped}/* #{node['geoserver']['working_dir']};

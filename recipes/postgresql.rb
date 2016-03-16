@@ -47,7 +47,7 @@ postgresql_database 'create postgis extension' do
   sql "CREATE EXTENSION if not exists postgis;
         CREATE EXTENSION if not exists postgis_topology;
         CREATE EXTENSION if not exists dblink;
-        create or replace view observation_locations as 
+        create or replace view observation_locations as
         SELECT obs.id, obs.source, obs.species_name, obs.topology
         FROM dblink(
           'dbname=biodiv'::text,
