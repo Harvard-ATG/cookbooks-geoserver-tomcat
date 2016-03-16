@@ -46,3 +46,6 @@ suites:
     run_list:
       - recipe[geoserver-tomcat::default]
     attributes:
+      java:
+        install_flavor: oracle
+        jdk_version: 7

@@ -20,7 +20,7 @@ end
 bash 'unzip geoserver' do
   user 'root'
   cwd ::File.dirname(geoserver_bin_zip)
-  code "unzip -qo geoserver geoserver_bin_#{node['geoserver']['version']}.zip"
+  code "unzip -qo geoserver_bin_#{node['geoserver']['version']}.zip"
   not_if ::File.directory?("geoserver-#{node['geoserver']['version']}")
 end
 
