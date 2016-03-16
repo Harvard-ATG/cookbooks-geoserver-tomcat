@@ -3,6 +3,8 @@
 # Recipe:: binary
 #
 # Copyright (c) 2016 The Authors, All Rights Reserved.
+#
+# this method is based on documentation found at http://docs.geoserver.org/stable/en/user/installation/linux.html
 
 geoserver_bin_zip = "#{Chef::Config['file_cache_path'] || '/tmp'}/geoserver_bin_#{version}.zip"
 geoserver_unziped = "geoserver-#{node['geoserver']['version']}"
@@ -23,7 +25,7 @@ bash 'unzip geoserver' do
 end
 
 directory node['geoserver']['working_dir'] do
-  action :create_if_missing
+  action :create
 end
 
 bash 'move geoserver' do
