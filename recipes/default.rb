@@ -18,7 +18,6 @@
 #
 
 include_recipe 'java'
-include_recipe 'application'
 include_recipe 'postgis'
 
 package 'unzip'
@@ -30,44 +29,60 @@ remote_file node['geoserver']['download'] do
   action :create_if_missing
 end
 
+directory node['geoserver']['extracted'] do
+  group 'root'
+  mode '0755'
+  path 'name'
+  recursive false
+
+  action :create
+end
 bash 'unpack geoserver' do
-  code <<-EOH
-  mkdir "#{node['geoserver']['extracted']}"
-  unzip  #{node['geoserver']['download']} -d #{node['geoserver']['extracted']}
-  EOH
-  not_if "test -d #{node['geoserver']['extracted']}"
+  code "unzip -o #{node['geoserver']['download']} -d #{node['geoserver']['extracted']}"
+  # not_if "test -d #{node['geoserver']['extracted']}"
 end
 
+tmp_dir = '/tmp/geoserver-temp'
+directory  tmp_dir do
+  owner 'root'
+  group 'root'
+  mode '0755'
+
+  action :create
+end
 bash 'Creating temporary working directory' do
-  code <<-EOH
-  mkdir -p /tmp/geoserver-temp/WEB-INF/lib
-  EOH
+  code "mkdir -p /tmp/geoserver-temp/WEB-INF/lib"
 end
 
-remote_directory 'Extract amdb jar' do
-  path '/tmp/geoserver-temp/WEB-INF/lib'
+remote_directory '/tmp/geoserver-temp/WEB-INF/lib' do
+  path "#{tmp_dir}/WEB-INF/lib"
   source 'geoserver-lib'
+  recursive true
 end
 
 bash "Adding amdb jar to  geoserver  war file #{node['geoserver']['war']}" do
+  cwd tmp_dir
   code <<-EOH
-  cd /tmp/geoserver-temp
-  jar -uvf #{node['geoserver']['war']} WEB-INF/lib
-  chmod +r #{node['geoserver']['war']}
-  cd -
-  rm -rf /tmp/geoserver-temp
+  jar -uvf #{node['geoserver']['war']} WEB-INF/lib;
+  chmod +r #{node['geoserver']['war']};
   EOH
+end
+
+directory tmp_dir do
+  recursive true
+  action :delete
 end
 
 application node['geoserver']['context'] do
   path node['geoserver']['home']
   repository node['geoserver']['war']
-  revision     'HEAD'
-  scm_provider Chef::Provider::File::Deploy
+  revision '...'
+    scm_provider Chef::Provider::File::Deploy
 
   java_webapp do
     context_template 'geoserver.context.erb'
   end
+
   tomcat
 end
 
